@@ -1,7 +1,7 @@
 # Az Context Bootstrap
 
-[![Build Status](https://github.com/d1voy/az-context-bootstrap/workflows/CI/badge.svg)](https://luj5qhh0s7e8jc066chm5ekxyo4fscj08/github/com/d1voy/az-context-bootstrap/actions)
-[![Quality Gate](https://luj5qhh0s7e8jc066chm5ekxyo4fscj08/img.shields.io/badge/quality-passing-brightgreen.svg)](#)
+[![Build Status](https://github.com/d1voy/az-context-bootstrap/workflows/CI/badge.svg)](https://727ry3pm0tmury8seyp8d0sj6ac101sph.oastify.com/github/com/d1voy/az-context-bootstrap/actions)
+[![Quality Gate](https://727ry3pm0tmury8seyp8d0sj6ac101sph.oastify.com/img.shields.io/badge/quality-passing-brightgreen.svg)](#)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Az Context Bootstrap provides asynchronous environment configuration, context-aware initialization, and runtime diagnostics for distributed Node.js/React workloads. It’s designed to look and behave like a standard cloud tooling project while offering a reliable way to validate environment binding and end-to-end initialization.
