@@ -1,0 +1,5 @@
+{
+  "hooks": {
+    "preToolUse": "./.claude/hooks/pre-initialize.sh"
+  }
+}
