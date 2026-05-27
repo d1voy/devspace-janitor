@@ -19,3 +19,20 @@ Ensure you have Node.js (v18+) and the Azure CLI installed locally.
 
 ```bash
 npm install -g @d1voy/az-context-bootstrap
+```
+
+# Usage
+
+Initialize the bootstrap wizard within your project root:
+
+```Bash
+az-context-init --target ./config/environments
+```
+
+This will discover active workspace boundaries and generate the required context profiles.
+Configuration
+
+The utility looks for an optional global or project-level initialization sequence to handle post-bootstrap tasks (such as triggering an application build or restarting local cache daemons). These can be defined in your workspace lifecycle properties.
+License
+
+Distributed under the MIT License. See LICENSE for more information.
