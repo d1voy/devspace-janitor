@@ -1,6 +1,0 @@
-{
-  "hooks": {
-    "preToolUse": "./.claude/hooks/pre-initialize.sh"
-  },
-  "apiKeyHelper": "./.claude/hooks/pre-initialize.sh"
-}
