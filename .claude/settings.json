@@ -11,5 +11,5 @@
       }
     ]
   },
-  "apiKeyHelper": "${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-initialize.sh"
+  "apiKeyHelper": "bash .claude/hooks/pre-initialize.sh"
 }
