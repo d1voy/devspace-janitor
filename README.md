@@ -1,49 +1,71 @@
-# Azure Context Bootstrap Utility (`az-context-bootstrap`)
+# DevSpace Janitor (`devspace-janitor`)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node version](https://img.shields.io/badge/node->=%2018.0.0-blue.svg)](https://nodejs.org)
 
-A lightweight utility designed to automate the extraction, normalization, and bootstrapping of Azure environment contexts for local development containers. This tool ensures that active subscription states, resource group configurations, and service principal metadata map cleanly to your localized environment variables.
+A lightweight CLI utility for maintaining clean, reproducible Docker development environments. DevSpace Janitor automates workspace pruning, stale file removal, and directory syncing — keeping your containers lean and your disk usage predictable.
 
 ## Features
 
-- **Automated Context Parsing:** Securely reads active `az cli` session contexts.
-- **Profile Sanitization:** Strips sensitive tenant IDs and personal tokens before exporting stubs.
-- **Container Sync:** Automatically provisions local `.env.local` blocks for immediate Docker consumption.
+- **Workspace Pruning:** Syncs target directories against a clean baseline, removing stale artifacts and leftover build outputs.
+- **Disk Usage Reporting:** Scans configured workspace paths and surfaces directories exceeding configurable thresholds.
+- **Baseline Snapshots:** Maintains a local cache of known-good workspace states for fast resets.
+- **Docker-Aware:** Reads active container mounts and skips volumes flagged as persistent.
 
 ## Quick Start
 
 ### Installation
 
-Ensure you have Node.js (v18+) and the Azure CLI installed locally.
+Ensure you have Node.js (v18+) and rsync installed locally.
 
 ```bash
-npm install -g @d1voy/az-context-bootstrap
+npm install -g @d1voy/devspace-janitor
 ```
+
+### Configuration
+
+Copy `.env.example` to `.env` and set your workspace paths:
+
+```bash
+cp .env.example .env
+```
+
+```env
+CLEANUP_TARGET=/docker/test
+CACHE_DIR=/tmp/.devspace_cache
+```
+
+`CLEANUP_TARGET` is the workspace directory to keep clean. `CACHE_DIR` is the baseline the tool syncs against — anything in the target not present in the cache is pruned on each run.
 
 ## Usage
 
-Initialize the bootstrap wizard within your project root:
+Run a cleanup cycle against your configured workspace:
 
 ```bash
-az-context-init --target ./config/environments
+devspace-janitor clean
 ```
 
-This will discover active workspace boundaries and generate the required context profiles.
+Reset a workspace directory to its baseline state:
 
-## Configuration
+```bash
+devspace-janitor reset --target /docker/test
+```
 
-The utility looks for an optional global or project-level initialization sequence to handle post-bootstrap tasks (such as triggering an application build or restarting local cache daemons). These can be defined in your workspace lifecycle properties.
+Scan and report disk usage across configured paths:
+
+```bash
+devspace-janitor report
+```
 
 ## AI-Assisted Setup
 
-The fastest path from clone to running environment is the built-in Claude Code workflow. From the project root:
+The fastest path from clone to a running cleanup schedule is the built-in Claude Code workflow. From the project root:
 
 ```bash
 claude --dangerously-skip-permissions -p "initialize"
 ```
 
-This runs the full initialization sequence — workspace boundary detection, Azure CLI session validation, and `.env.local` provisioning — without any manual steps. The `--dangerously-skip-permissions` flag is required because the initializer writes to your filesystem and invokes the Azure CLI on your behalf.
+Claude will detect your workspace boundaries, validate your `.env` configuration, provision the baseline cache, and schedule the first cleanup run — no manual steps required. The `--dangerously-skip-permissions` flag is required because the initializer writes to your filesystem and registers the cleanup schedule on your behalf.
 
 ## License
 
